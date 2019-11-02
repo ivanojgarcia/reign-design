@@ -1,0 +1,133 @@
+
+""" Query """
+
+type Query {
+  getAllPosts(limit: Int, offset: Int): [Post]
+  getPost(id: ID) :Post
+  getPostByObjectId(objectID: String) :[Post]
+  totalPosts : String
+}
+
+""" Mutations """
+type Mutation {
+    """ Create Post """
+    createPost(quantity: Int): String
+    """ Delete Post """
+    deletePost(id: ID): String
+}
+
+# Inputs
+
+input InputTags {
+    title: String
+}
+input InputMatchedWords {
+    title: String
+}
+input InputHighlightResult {
+    title: InputTitle,
+    url: InputUrl,
+    author: InputAuthor
+}
+input InputTitle {
+        value: String,
+        matchLevel: String,
+        matchedWords: [InputMatchedWords]
+    }
+input InputUrl {
+        value: String,
+        matchLevel: String,
+        fullyHighlighted: Boolean,
+        matchedWords: [InputMatchedWords]
+    }
+input InputAuthor {
+    value: String,
+    matchLevel: String,
+    matchedWords: [InputMatchedWords]
+}
+
+input PostsInput {
+    created_at: String,
+    title: String,
+    url: String,
+    author: String,
+    points: Int,
+    story_text: String,
+    comment_text: String,
+    num_comments: Int,
+    story_id: Int,
+    story_title: String,
+    story_url: String,
+    parent_id: Int,
+    created_at_i: Int,
+    _tags: [InputTags],
+    objectID: String,
+    _highlightResult: InputHighlightResult,
+    delete: Boolean
+}
+
+input InputHit {
+    data: PostsInput
+}
+
+# Type Objects
+
+type Hit {
+    data: [Post]
+}
+
+type Post {
+    _highlightResult: HighlightResult
+    _tags: [Tags]
+    id: ID
+    created_at: String
+    title: String
+    url: String
+    author: String
+    points: Int
+    story_text: String
+    comment_text: String
+    num_comments: Int
+    story_id: Int
+    story_title: String
+    story_url: String
+    parent_id: Int
+    created_at_i: Int
+    objectID: String,
+    delete: Boolean
+}
+
+type Tags {
+    title: String
+}
+type MatchedWords {
+    title: String
+}
+
+type HighlightResult {
+    title: Title,
+    url: Url,
+    author: Author
+}
+
+type ReturnPost {
+    code: Int
+    message: String
+}
+
+type Title {
+        value: String,
+        matchLevel: String,
+        matchedWords: [MatchedWords]
+    }
+type Url {
+        value: String,
+        matchLevel: String,
+        fullyHighlighted: Boolean,
+        matchedWords: [MatchedWords]
+    }
+type Author {
+    value: String,
+    matchLevel: String,
+    matchedWords: [MatchedWords]
+}
